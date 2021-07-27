@@ -4,11 +4,11 @@ import Filter from './Filter';
 const UserTable: React.FC = () => {
 
     const handleEditUser = () => {
-
+        console.log('');
     };
 
     const handleDeleteUser = () => {
-
+        console.log('');
     };
 
     return (

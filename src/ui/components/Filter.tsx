@@ -8,7 +8,7 @@ const Filter: React.FC = () => {
     });
 
     const handleChange = () => {
-        
+        console.log('');
     };
 
     return (
