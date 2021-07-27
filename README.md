@@ -4,11 +4,16 @@ As developers at InquirEd, we strive to deliver products with accessible, respon
 
 This performance task will test your ability to visualize, filter, and update large collections of data.
 
-Clone down this repo, open in your favorite code-editor and run:
+Clone down this repository and create a new branch titled with your_name
+
+Open the repository in your favorite code-editor and run:
+
     - npm install
     - npm start
 
 What you are being handed is a skeleton of the completed feature.  We are more interested in how you make this project yours as opposed to simply being able to build it.
+
+When you are finished, push changes to your branch and let us know you are done working.
 
 The Task:
 Build a UserTable component that lists the entries within the /public/users.json collection.
