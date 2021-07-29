@@ -1,20 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
 const NewUserForm: React.FC = () => {
-    
     const [formValues, setFormValues] = useState({
         firstName: '',
         lastName: '',
         middleInitial: '',
         active: '',
-        district: 0
-    });
+        district: 0,
+    })
 
-    return (
-        <div className="admin-new-user-form">
+    return <div className="admin-new-user-form"></div>
+}
 
-        </div>
-    );
-};
-
-export default NewUserForm;
+export default NewUserForm

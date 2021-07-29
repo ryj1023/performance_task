@@ -1,17 +1,14 @@
 module.exports = {
     root: true,
     parser: '@typescript-eslint/parser',
-    plugins: [
-        '@typescript-eslint',
-    ],
+    plugins: ['@typescript-eslint'],
     extends: [
         'eslint:recommended',
         'plugin:@typescript-eslint/recommended',
-        'plugin:react/recommended'
+        'plugin:react/recommended',
     ],
     rules: {
-        'semi': 2,
-        'indent': ['warn', 4]
-    }
+        semi: 2,
+        indent: ['warn', 4],
+    },
 };
-  
