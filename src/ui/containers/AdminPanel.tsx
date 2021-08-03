@@ -1,61 +1,91 @@
 import React, { useEffect, useState } from 'react';
 import UserTable from '../components/UserTable';
-
-export interface Users {
+interface District {
     id: number;
-    first_name: string;
-    last_name: string;
-    email: string;
-    verified: boolean;
-    middle_initial: null | string;
-    created_at: string;
-    district: number;
-    active: boolean;
-    districtData: {
-        id: number;
-        city: string;
-        name: string;
-    };
+    city: string;
+    name: string;
 }
-[];
-const fetchData = async (dataSource: string): Promise<any> => {
-    try {
-        const response = await fetch(dataSource);
-        return await response.json();
-        // setUsers(jsonUsers);
-    } catch (err) {
-        console.log('err', err);
-    }
-};
+export interface User {
+    id?: number;
+    first_name?: string;
+    last_name?: string;
+    email?: string;
+    verified?: boolean;
+    middle_initial?: null | string;
+    created_at?: string;
+    district?: number;
+    active?: boolean;
+    districtData: District;
+}
 
-const combineFetchedData = (userData: any, districtsData: any): Users => {
-    const combinedData = userData.reduce(
-        (acc: any, user: { district: any }) => {
-            const foundDistrict = districtsData.find(
-                (districtData: { id: any }) => user.district === districtData.id
-            );
-            acc.push({ user, districtData: { ...foundDistrict } });
-            return acc;
-        },
-        []
-    );
-    return combinedData;
-};
+export interface Districts {
+    districtData: District[];
+}
+
+export interface Users extends Districts {
+    users: User[];
+}
 
 const AdminPanel: React.FC = () => {
-    const [users, setUsers] = useState<Users>();
-    const [test, setTest] = useState<number>(3);
+    const [users, setUsers] = useState<Users['users']>([]);
+    const [districts, setDistricts] = useState<Districts['districtData']>([]);
+    const fetchData = async (dataSource: string): Promise<any> => {
+        try {
+            const response = await fetch(dataSource);
+            return await response.json();
+        } catch (err) {
+            console.log('err', err);
+        }
+        return null;
+    };
+
+    const combineFetchedData = (
+        userData: Users['users'],
+        districtsData: Users['districtData']
+    ): Users['users'] => {
+        const combinedData = userData.reduce((acc: any, user: User) => {
+            const foundDistrict = districtsData.find(
+                (districtData: { id: number }) =>
+                    user.district === districtData.id
+            );
+            acc.push({ ...user, districtData: { ...foundDistrict } });
+            return acc;
+        }, []);
+        return combinedData;
+    };
     const getUserTableData = async () => {
-        const userData: any = await fetchData('users.json');
-        const districtsData: any = await fetchData('districts.json');
+        const userData: Users['users'] = await fetchData('users.json');
+        const districtsData: Users['districtData'] = await fetchData(
+            'districts.json'
+        );
+        setDistricts(districtsData);
         setUsers(combineFetchedData(userData, districtsData));
     };
     useEffect(() => {
         getUserTableData();
     }, []);
+
+    const isLoadingUsers: boolean = users.length > 0 ? false : true;
     return (
         <div className="app-admin-panel">
-            <UserTable users={users} />
+            {isLoadingUsers ? (
+                <div className="d-flex justify-content-center align-items-center w-100">
+                    <div
+                        className="spinner-border m-5"
+                        style={{ width: '8rem', height: '8rem' }}
+                        role="status"
+                    ></div>
+                </div>
+            ) : (
+                <UserTable
+                    users={users}
+                    districts={districts}
+                    setUsers={setUsers}
+                    onFilterReset={() => {
+                        getUserTableData();
+                    }}
+                />
+            )}
         </div>
     );
 };

@@ -1,0 +1,16 @@
+tbody {
+    tr:hover {
+        cursor: pointer;
+        background: lightgray;
+    }
+}
+.spinner-border {
+    color: lightgray;
+}
+
+table {
+    border: 1px solid lightgray;
+}
+.table > :not(:last-child) > :last-child * {
+    border-bottom-color: lightgray !important;
+}

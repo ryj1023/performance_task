@@ -3,7 +3,7 @@
     src: url('../../assets/fonts/MotorOil1937M54.woff');
 }
 
-.navbar-inquired {
+.navbar {
     display: flex;
     position: relative;
     flex-wrap: wrap;
@@ -12,7 +12,7 @@
     padding: 0px 20px;
 }
 
-.container-inquired {
+.container {
     width: 100%;
     padding-right: 15px;
     padding-left: 15px;
@@ -24,17 +24,17 @@
     justify-content: space-between;
 }
 
-.nav-main-inquired {
+.nav-main {
     background: #494964;
     height: 72px;
     padding: 10px;
 }
 
-.navbar-dark-inquired {
+.navbar-dark {
     color: #fff !important;
 }
 
-.navbar-brand-inquired {
+.navbar-brand {
     font-family: Motor-Oil;
     font-size: 18px;
     letter-spacing: 6px;
@@ -48,7 +48,7 @@
     white-space: nowrap;
 }
 
-.navbar-nav-inquired {
+.navbar-nav {
     display: flex;
     flex-direction: row !important;
     padding-left: 0;
@@ -58,13 +58,13 @@
     align-items: center;
 }
 
-.nav-item-inquired {
+.nav-item {
     margin-left: 1rem;
     margin-bottom: 0;
     border-bottom: 5px solid transparent;
 }
 
-.nav-link-inquired {
+.nav-link {
     color: white !important;
     padding: 24px 14px !important;
     margin-left: 10px;
@@ -73,16 +73,16 @@
     font-weight: 300;
 }
 
-.nav-item-inquired.active .nav-link-inquired {
+.nav-item.active .nav-link {
     border-bottom: 3px solid yellow;
 }
 
-.nav-btn-inquired {
+.nav-btn {
     color: white;
     border: 1px solid #a3a4b1;
     margin-left: 1rem;
 }
-.nav-btn-inquired:hover {
+.nav-btn:hover {
     border-color: white;
     background: rgba(255, 255, 255, 0.2);
     text-decoration: none;
@@ -112,15 +112,15 @@
     padding: 0;
 }
 
-.nav-main .nav-link-inquired,
-.footer .nav-link-inquired {
+.nav-main .nav-link,
+.footer .nav-link {
     padding: 24px 14px 24px !important;
     margin-left: 10px;
     text-transform: uppercase;
     font-weight: 300;
 }
 
-.navbar-nav-inquired .dropdown-menu {
+.navbar-nav .dropdown-menu {
     position: absolute;
     right: 0;
     top: 80%;

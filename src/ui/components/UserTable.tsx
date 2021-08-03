@@ -1,178 +1,185 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Modal from './Modal';
+import UserForm from './UserForm';
 import Filter from './Filter';
-import { Users as Props } from '../containers/AdminPanel'; // importing the state interface allows us to define it as props here
-
-interface UserProps {
-    users?: Props;
+import {
+    Users as AllUsersProps,
+    User as UserProps,
+} from '../containers/AdminPanel';
+import { Districts as DistrictProps } from '../containers/AdminPanel';
+import '../stylesheets/user-table.scss';
+interface Props {
+    users: AllUsersProps['users'];
+    districts: DistrictProps['districtData'];
+    setUsers: React.Dispatch<React.SetStateAction<Props['users']>>;
+    onFilterReset: () => void;
 }
-const UserTable: React.FC<UserProps> = (props): React.ReactElement => {
-    console.log('props', props);
-    const handleEditUser = () => {
-        console.log('');
-    };
 
-    const handleDeleteUser = () => {
-        console.log('');
-    };
+const UserTable = ({
+    districts,
+    users,
+    setUsers,
+    onFilterReset,
+}: Props): React.ReactElement => {
+    const [selectedUser, setSelectedUser] = useState<any>();
+    const [editUserModalIsOpen, setEditUserModalIsOpen] =
+        useState<boolean>(false);
+    const [addUserModalIsOpen, setAddUserModalIsOpen] =
+        useState<boolean>(false);
 
     return (
-        // <div className="admin-user-table" style={{ marginTop: '7rem' }}>
-        //     <Filter />
-        //     <div
-        //         style={{
-        //             border: '1px solid black',
-        //             width: '50rem',
-        //             marginTop: '2rem',
-        //         }}
-        //     >
-        //         <h2
-        //             className="text-primary"
-        //             style={{ textAlign: 'center', textDecoration: 'underline' }}
-        //         >
-        //             Users
-        //         </h2>
-        //         <ul
-        //             style={{
-        //                 listStyle: 'none',
-        //                 paddingLeft: 0,
-        //                 height: '30rem',
-        //             }}
-        //         >
-        //             <li
-        //                 style={{
-        //                     fontWeight: 700,
-        //                     borderBottom: '2px solid black',
-        //                     marginBottom: '1rem',
-        //                     padding: '1rem',
-        //                 }}
-        //             >
-        //                 <div
-        //                     style={{
-        //                         display: 'flex',
-        //                         justifyContent: 'space-evenly',
-        //                         textAlign: 'center',
-        //                     }}
-        //                 >
-        //                     <div style={{ width: '5%' }}>ID</div>
-        //                     <div style={{ width: '20%' }}>Last Name</div>
-        //                     <div style={{ width: '20%' }}>First Name</div>
-        //                     <div style={{ width: '5%' }}>M.I.</div>
-        //                     <div style={{ width: '20%' }}>District</div>
-        //                     <div style={{ width: '10%' }}>Verified</div>
-        //                     <div style={{ width: '20%' }}>Created</div>
-        //                 </div>
-        //             </li>
-        //             <li
-        //                 style={{
-        //                     marginBottom: '2rem',
-        //                     background: '#fff',
-        //                     border: '1px solid black',
-        //                     padding: '1rem',
-        //                 }}
-        //             >
-        //                 <div
-        //                     style={{
-        //                         display: 'flex',
-        //                         justifyContent: 'space-evenly',
-        //                         textAlign: 'center',
-        //                         marginBottom: '0.5rem',
-        //                     }}
-        //                 >
-        //                     <div style={{ width: '5%' }}>108</div>
-        //                     <div style={{ width: '20%' }}>Smith</div>
-        //                     <div style={{ width: '20%' }}>Robert</div>
-        //                     <div style={{ width: '5%' }}>J</div>
-        //                     <div style={{ width: '20%' }}>Cure District</div>
-        //                     <div style={{ width: '10%' }}>True</div>
-        //                     <div style={{ width: '20%' }}>June 18, 2020</div>
-        //                 </div>
-        //                 <div
-        //                     style={{
-        //                         marginLeft: 'auto',
-        //                         width: '10rem',
-        //                         display: 'flex',
-        //                         justifyContent: 'space-between',
-        //                         paddingRight: '2rem',
-        //                     }}
-        //                 >
-        //                     <button type="button">Edit</button>
-        //                     <button type="button">Delete</button>
-        //                 </div>
-        //             </li>
-        //             <li
-        //                 style={{
-        //                     marginBottom: '2rem',
-        //                     background: '#fff',
-        //                     border: '1px solid black',
-        //                     padding: '1rem',
-        //                 }}
-        //             >
-        //                 <div
-        //                     style={{
-        //                         display: 'flex',
-        //                         justifyContent: 'space-evenly',
-        //                         textAlign: 'center',
-        //                         marginBottom: '0.5rem',
-        //                     }}
-        //                 >
-        //                     <div style={{ width: '5%' }}>142</div>
-        //                     <div style={{ width: '20%' }}>Morrissey</div>
-        //                     <div style={{ width: '20%' }}>Steven</div>
-        //                     <div style={{ width: '5%' }}>P</div>
-        //                     <div style={{ width: '20%' }}>Cure District</div>
-        //                     <div style={{ width: '10%' }}>True</div>
-        //                     <div style={{ width: '20%' }}>June 18, 2020</div>
-        //                 </div>
-        //                 <div
-        //                     style={{
-        //                         marginLeft: 'auto',
-        //                         width: '10rem',
-        //                         display: 'flex',
-        //                         justifyContent: 'space-between',
-        //                         paddingRight: '2rem',
-        //                     }}
-        //                 >
-        //                     <button type="button">Edit</button>
-        //                     <button type="button">Delete</button>
-        //                 </div>
-        //             </li>
-        //         </ul>
-        //     </div>
-        // </div>
+        <div className="mx-4">
+            <section className="mb-4 pt-2">
+                <h1>Users</h1>
+                <div className="d-flex justify-content-between">
+                    <div>
+                        <button
+                            onClick={() => setAddUserModalIsOpen(true)}
+                            className="btn btn-primary"
+                        >
+                            Add User
+                        </button>
+                    </div>
 
-        <table
-            className="table table-striped admin-user-table m-4"
-            style={{ marginTop: '7rem', width: '50rem' }}
-        >
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat </td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                </tr>
-            </tbody>
-        </table>
+                    <Filter
+                        allDistricts={districts}
+                        onFilterSelect={(filters: {
+                            activeToggle: boolean;
+                            districtInput: number | string;
+                        }) => {
+                            const district = filters.districtInput !== '';
+                            const filteredUsers = users.filter(
+                                (user: UserProps) => {
+                                    const activeMatch =
+                                        user.active == filters.activeToggle;
+                                    if (district) {
+                                        return (
+                                            activeMatch &&
+                                            user.district ===
+                                                filters.districtInput
+                                        );
+                                    }
+                                    return activeMatch;
+                                }
+                            );
+                            setUsers(filteredUsers);
+                        }}
+                        onFilterReset={onFilterReset}
+                    />
+                </div>
+            </section>
+            <div className="table-responsive">
+                <table className="table table-striped admin-user-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Last Name</th>
+                            <th scope="col">First Name</th>
+                            <th scope="col">M.I.</th>
+                            <th scope="col" className="extended">
+                                Email
+                            </th>
+                            <th scope="col">District</th>
+                            <th scope="col">Verified</th>
+                            <th scope="col">Active</th>
+                            <th scope="col">Created</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {users &&
+                            users.map((userData: UserProps) => {
+                                return (
+                                    <tr
+                                        key={userData.id}
+                                        onClick={() => {
+                                            setSelectedUser(userData);
+                                            setEditUserModalIsOpen(true);
+                                        }}
+                                    >
+                                        <td>{userData.id}</td>
+                                        <td>{userData.last_name}</td>
+                                        <td>{userData.first_name}</td>
+                                        <td>{userData.middle_initial}</td>
+                                        <td>{userData.email}</td>
+                                        <td>
+                                            {userData.districtData.name},{' '}
+                                            {userData.districtData.city}
+                                        </td>
+
+                                        <td>
+                                            {userData.verified
+                                                ? 'True'
+                                                : 'False'}
+                                        </td>
+                                        <td>
+                                            {userData.active ? 'True' : 'False'}
+                                        </td>
+                                        <td>{userData.created_at}</td>
+                                    </tr>
+                                );
+                            })}
+                    </tbody>
+                </table>
+            </div>
+            <Modal
+                isOpen={editUserModalIsOpen}
+                title="Edit User"
+                onClose={() => setEditUserModalIsOpen(false)}
+            >
+                {selectedUser && (
+                    <UserForm
+                        {...selectedUser}
+                        numberOfUsers={users.length}
+                        formType="edit"
+                        allDistricts={districts}
+                        onRemoveUser={() => {
+                            const foundUserIndex = users.findIndex(
+                                (userData: any) =>
+                                    userData.id === selectedUser.id
+                            );
+                            setUsers([
+                                ...users.slice(0, foundUserIndex),
+                                ...users.slice(foundUserIndex + 1),
+                            ]);
+                        }}
+                        onSubmit={(updatedUserData: UserProps) => {
+                            const mergedUserData = {
+                                ...selectedUser,
+                                ...updatedUserData,
+                            };
+                            const foundUserIndex = users.findIndex(
+                                (userData: UserProps) =>
+                                    userData.id === mergedUserData.id
+                            );
+                            setUsers(
+                                Object.assign([], users, {
+                                    [foundUserIndex]: mergedUserData,
+                                })
+                            );
+                        }}
+                    />
+                )}
+            </Modal>
+            {/* <Modal
+                isOpen={addUserModalIsOpen}
+                title="Add User"
+                onClose={() => setAddUserModalIsOpen(false)}
+            >
+                <UserForm
+                    numberOfUsers={users.length}
+                    formType="add"
+                    allDistricts={districts}
+                    onSubmit={(userData: UserProps) => {
+                        setUsers([
+                            ...users,
+                            {
+                                ...userData,
+                            },
+                        ]);
+                    }}
+                />
+            </Modal> */}
+        </div>
     );
 };
 
