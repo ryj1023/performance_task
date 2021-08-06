@@ -30,6 +30,7 @@ const AdminPanel: React.FC = () => {
     const [users, setUsers] = useState<Users['users']>([]);
     const [districts, setDistricts] = useState<Districts['districtData']>([]);
     const fetchData = async (dataSource: string): Promise<any> => {
+        // this function is used to fetch both users and districts data
         try {
             const response = await fetch(dataSource);
             return await response.json();
@@ -59,6 +60,7 @@ const AdminPanel: React.FC = () => {
             'districts.json'
         );
         setDistricts(districtsData);
+        // User and disctricts data are combined so that data from both types can be used in the User table
         setUsers(combineFetchedData(userData, districtsData));
     };
     useEffect(() => {
