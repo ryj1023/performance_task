@@ -160,7 +160,7 @@ const UserTable = ({
                     />
                 )}
             </Modal>
-            {/* <Modal
+            <Modal
                 isOpen={addUserModalIsOpen}
                 title="Add User"
                 onClose={() => setAddUserModalIsOpen(false)}
@@ -178,7 +178,7 @@ const UserTable = ({
                         ]);
                     }}
                 />
-            </Modal> */}
+            </Modal>
         </div>
     );
 };

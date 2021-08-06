@@ -62,6 +62,7 @@ const AdminPanel: React.FC = () => {
         setUsers(combineFetchedData(userData, districtsData));
     };
     useEffect(() => {
+        // get district and user data to be used in the User table.
         getUserTableData();
     }, []);
 
